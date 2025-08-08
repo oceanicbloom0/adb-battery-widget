@@ -12,11 +12,6 @@ onMounted(async () => {
   window.api.onBatteryLevelUpdate((_event, level) => {
     batteryLevel.value = typeof level === 'number' ? level : null
   })
-
-  // 监听设置更新
-  window.api.onSettingsUpdated((_event, settings) => {
-    batteryStyle.value = settings.display?.batteryStyle || 'circular'
-  })
 })
 
 const levelColor = computed(() => {

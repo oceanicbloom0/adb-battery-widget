@@ -9,9 +9,6 @@ declare global {
       onBatteryLevelUpdate: (
         callback: (event: import('electron').IpcRendererEvent, level: number | null) => void
       ) => void
-      onSettingsUpdated: (
-        callback: (event: import('electron').IpcRendererEvent, settings: any) => void
-      ) => void
       getSettings: () => Promise<{
         adb: { mode: 'usb' | 'tcp'; host: string; port: number; customPath: string }
         startup: { openAtLogin: boolean }

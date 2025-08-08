@@ -91,7 +91,7 @@ function openSettingsWindow(): void {
   settingsWindow = new BrowserWindow({
     width: 420,
     height: 520,
-    title: 'ADB Battery Widget - 设置',
+    title: '设置',
     resizable: false,
     autoHideMenuBar: true,
     webPreferences: {
@@ -159,12 +159,6 @@ app.whenReady().then(() => {
       }
     }
     applySettings()
-    
-    // 通知悬浮窗组件刷新设置
-    if (mainWindow && !mainWindow.isDestroyed()) {
-      mainWindow.webContents.send('settings:updated', store.store)
-    }
-    
     return store.store
   })
   ipcMain.on('settings:open', () => openSettingsWindow())
