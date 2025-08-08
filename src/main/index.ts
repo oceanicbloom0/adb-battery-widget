@@ -40,6 +40,7 @@ function createWindow(): void {
     frame: false,
     transparent: true,
     resizable: false,
+    skipTaskbar: true, // 隐藏悬浮窗在任务栏的显示
     ...(process.platform === 'linux' ? { icon } : {}),
     webPreferences: {
       preload: join(__dirname, '../preload/index.js'),
