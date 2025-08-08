@@ -3,8 +3,10 @@ import { electronAPI } from '@electron-toolkit/preload'
 
 // Custom APIs for renderer
 const api = {
-  onBatteryLevelUpdate: (callback: (event: Electron.IpcRendererEvent, level: number) => void) =>
+  onBatteryLevelUpdate: (callback: (event: Electron.IpcRendererEvent, level: number | null) => void) =>
     ipcRenderer.on('battery-level-update', callback),
+  onSettingsUpdated: (callback: (event: Electron.IpcRendererEvent, settings: any) => void) =>
+    ipcRenderer.on('settings:updated', callback),
   getSettings: async () => ipcRenderer.invoke('settings:get'),
   setSettings: async (partialSettings: any) => ipcRenderer.invoke('settings:set', partialSettings),
   openSettingsWindow: () => ipcRenderer.send('settings:open'),

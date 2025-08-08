@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 
 type Settings = {
   adb: { mode: 'usb' | 'tcp'; host: string; port: number; customPath: string }
@@ -10,6 +10,21 @@ type Settings = {
 
 const settings = ref<Settings | null>(null)
 const saving = ref(false)
+const isDark = ref(false)
+
+// 检测系统主题
+function detectSystemTheme() {
+  const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
+  isDark.value = mediaQuery.matches
+
+  // 监听系统主题变化
+  mediaQuery.addEventListener('change', (e) => {
+    isDark.value = e.matches
+  })
+}
+
+// 计算主题
+const theme = computed(() => isDark.value ? 'dark' : 'light')
 
 async function load() {
   settings.value = await window.api.getSettings()
@@ -42,11 +57,14 @@ async function save() {
   saving.value = false
 }
 
-onMounted(load)
+onMounted(() => {
+  load()
+  detectSystemTheme()
+})
 </script>
 
 <template>
-  <v-app>
+  <v-app :theme="theme">
     <v-container class="pa-4" style="max-width: 520px">
       <v-card elevation="2">
         <v-card-title>设置</v-card-title>
