@@ -74,9 +74,9 @@ body::-webkit-scrollbar { display: none; }
 
 .widget { position: fixed; top: 0; right: 0; width: 124px; height: 96px; box-sizing: border-box; color: #fff; -webkit-app-region: drag; }
 .surface { background: rgba(0,0,0,0.64) !important; border-radius: 8px; }
-.content { height: 72px; display: flex; align-items: center; justify-content: center; -webkit-app-region: no-drag; }
+.content { height: 72px; display: flex; align-items: center; justify-content: center; }
 .disconnected { display: flex; align-items: center; gap: 6px; font-weight: 600; color: #ffb74d; }
-.device { margin-top: 6px; font-size: 12px; text-align: center; opacity: 0.9; -webkit-app-region: no-drag; }
+.device { margin-top: 6px; font-size: 12px; text-align: center; opacity: 0.9; }
 
 /* 横向电池条样式 */
 .horizontal-battery { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
