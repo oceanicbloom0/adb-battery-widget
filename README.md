@@ -2,13 +2,13 @@
 
 一个基于 Electron + Vue 的 Android 设备电池电量监控悬浮窗应用。
 
-## ✨ 功能特性
+## 功能特性
 
 - **实时电池监控** - 通过 ADB 连接获取 Android 设备电池电量
 - **悬浮窗显示** - 小巧的桌面悬浮窗，实时显示电池百分比
 - **灵活连接方式** - 支持 USB 和 TCP/IP 两种 ADB 连接模式
 
-## 📦 安装
+## 安装
 
 ### 环境要求
 
@@ -46,7 +46,7 @@ npm run build:mac
 npm run build:linux
 ```
 
-## 🚀 使用说明
+## 使用说明
 
 ### 首次使用
 
@@ -95,16 +95,6 @@ src/
     └── index.html         # HTML 模板
 ```
 
-### 技术栈
-
-- **Electron** - 桌面应用框架
-- **Vue 3** - 前端框架
-- **Vuetify** - Material Design UI 组件库
-- **TypeScript** - 类型安全
-- **@devicefarmer/adbkit** - ADB 客户端库
-- **electron-store** - 配置持久化
-- **electron-updater** - 自动更新
-
 ### 开发命令
 
 ```bash
@@ -148,37 +138,6 @@ npm run start
 - macOS: `~/Library/Application Support/adb-battery-widget/settings.json`
 - Linux: `~/.config/adb-battery-widget/settings.json`
 
-## 🔧 故障排除
-
-### 常见问题
-
-**Q: 悬浮窗显示"未连接"**
-
-- 检查设备是否已启用 USB 调试
-- 确认 ADB 服务是否正常运行
-- 尝试在设置中切换连接模式
-
-**Q: 设置保存失败**
-
-- 检查应用是否有写入配置文件的权限
-- 重启应用后重试
-
-**Q: 托盘图标不显示**
-
-- 检查系统托盘区域是否被隐藏
-- 重启应用
-
-### 调试模式
-
-开发模式下会自动打开 DevTools，可以查看：
-
-- 主进程日志：ADB 连接状态
-- 渲染进程日志：UI 交互和错误
-
 ## 📄 许可证
 
 MIT License
-
-## 🤝 贡献
-
-欢迎提交 Issue 和 Pull Request！
