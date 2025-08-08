@@ -134,3 +134,6 @@ temp/
 # Electron specific
 app-update.yml
 dev-app-update.yml
+
+# Claude
+CLAUDE.md
