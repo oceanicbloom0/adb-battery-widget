@@ -56,7 +56,7 @@ npm run build:linux
 
 ### ADB 连接配置
 
-#### USB 模式（推荐）
+#### USB 模式
 
 - 用 USB 线连接设备
 - 在设备上允许 USB 调试
