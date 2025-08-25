@@ -42,7 +42,10 @@ async function save() {
   saving.value = false
 }
 
-onMounted(load)
+
+onMounted(() => {
+  load()
+})
 </script>
 
 <template>
@@ -68,7 +71,7 @@ onMounted(load)
                 />
               </v-col>
             </v-row>
-            <v-row dense v-if="settings.adb.mode==='tcp'">
+            <v-row dense v-if="settings.adb.mode === 'tcp'">
               <v-col cols="12" md="8">
                 <v-text-field label="主机" v-model="settings.adb.host" placeholder="192.168.1.10" />
               </v-col>
@@ -111,10 +114,22 @@ onMounted(load)
             <div class="text-subtitle-2 mb-2">通用</div>
             <v-row>
               <v-col cols="12" md="6">
-                <v-switch inset hide-details color="primary" v-model="settings.startup.openAtLogin" label="开机自启" />
+                <v-switch
+                  inset
+                  hide-details
+                  color="primary"
+                  v-model="settings.startup.openAtLogin"
+                  label="开机自启"
+                />
               </v-col>
               <v-col cols="12" md="6">
-                <v-switch inset hide-details color="primary" v-model="settings.updates.autoCheck" label="自动检查更新" />
+                <v-switch
+                  inset
+                  hide-details
+                  color="primary"
+                  v-model="settings.updates.autoCheck"
+                  label="自动检查更新"
+                />
               </v-col>
             </v-row>
           </template>
@@ -134,7 +149,9 @@ onMounted(load)
 
 <style scoped>
 /* Vuetify 提供大部分样式，这里仅做极简补充 */
-.loading { color: #666; }
+.loading {
+  color: #666;
+}
 </style>
 
 <script lang="ts">
@@ -146,5 +163,3 @@ export default {
   }
 }
 </script>
-
-

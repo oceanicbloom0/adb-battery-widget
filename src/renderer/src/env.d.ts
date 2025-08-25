@@ -16,8 +16,16 @@ declare global {
         display: { batteryStyle: 'circular' | 'horizontal' }
       }>
       setSettings: (partial: any) => Promise<any>
+      onSettingsChanged: (callback: (event: any, settings: any) => void) => void
       openSettingsWindow: () => void
       checkForUpdatesNow: () => void
+      scanNetworkDevices: () => void
+      onScanResults: (
+        callback: (
+          event: import('electron').IpcRendererEvent,
+          devices: { ip: string; port: number }[]
+        ) => void
+      ) => void
     }
   }
 }

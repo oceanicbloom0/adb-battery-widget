@@ -7,6 +7,7 @@ const api = {
     ipcRenderer.on('battery-level-update', callback),
   getSettings: async () => ipcRenderer.invoke('settings:get'),
   setSettings: async (partialSettings: any) => ipcRenderer.invoke('settings:set', partialSettings),
+  onSettingsChanged: (callback: (event: any, settings: any) => void) => ipcRenderer.on('settings:changed', callback),
   openSettingsWindow: () => ipcRenderer.send('settings:open'),
   checkForUpdatesNow: () => ipcRenderer.send('updates:check-now')
 }

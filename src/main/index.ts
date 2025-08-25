@@ -7,7 +7,8 @@ const Adb = require('@devicefarmer/adbkit').default
 // electron-store 是 ESM。为了在 CJS 打包环境下兼容，这里做 default 兼容处理
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const ElectronStoreLib = require('electron-store')
-const Store = (ElectronStoreLib.default ?? ElectronStoreLib) as typeof import('electron-store').default
+const Store = (ElectronStoreLib.default ??
+  ElectronStoreLib) as typeof import('electron-store').default
 // electron-store 需要在主进程初始化一次，以便渲染进程可用
 if (typeof Store.initRenderer === 'function') {
   // 在主进程注册 IPC handler
@@ -188,6 +189,7 @@ app.whenReady().then(() => {
     bin: customAdbPath || undefined
   })
 
+
   const trackDevice = () => {
     client
       .listDevices()
@@ -208,10 +210,7 @@ app.whenReady().then(() => {
                   console.log('Battery level:', batteryLevel)
                   const win = BrowserWindow.getAllWindows()[0]
                   if (!win) return
-                  win.webContents.send(
-                    'battery-level-update',
-                    batteryLevel
-                  )
+                  win.webContents.send('battery-level-update', batteryLevel)
                 }
               })
           }, 5000)
@@ -269,5 +268,10 @@ function applySettings(): void {
   if (autoCheck && !is.dev) {
     autoUpdater.autoDownload = true
     autoUpdater.checkForUpdatesAndNotify()
+  }
+
+  // Notify renderer processes about settings changes
+  if (mainWindow && !mainWindow.isDestroyed()) {
+    mainWindow.webContents.send('settings:changed', store.store)
   }
 }

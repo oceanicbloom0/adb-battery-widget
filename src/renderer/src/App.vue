@@ -12,6 +12,11 @@ onMounted(async () => {
   window.api.onBatteryLevelUpdate((_event, level) => {
     batteryLevel.value = typeof level === 'number' ? level : null
   })
+
+  // 监听设置变化
+  window.api.onSettingsChanged((_event, settings) => {
+    batteryStyle.value = settings.display?.batteryStyle || 'circular'
+  })
 })
 
 const levelColor = computed(() => {
@@ -20,7 +25,9 @@ const levelColor = computed(() => {
   return 'error'
 })
 
-const batteryText = computed(() => (batteryLevel.value === null ? '未连接' : `${batteryLevel.value}%`))
+const batteryText = computed(() =>
+  batteryLevel.value === null ? '未连接' : `${batteryLevel.value}%`
+)
 </script>
 
 <template>
@@ -68,18 +75,63 @@ const batteryText = computed(() => (batteryLevel.value === null ? '未连接' : 
 
 <style>
 /* 透明窗口与无滚动条 */
-html, body { margin: 0; padding: 0; background: transparent !important; overflow: hidden; }
-body::-webkit-scrollbar { display: none; }
-#app { background: transparent !important; overflow: hidden; }
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: transparent !important;
+  overflow: hidden;
+}
+body::-webkit-scrollbar {
+  display: none;
+}
+#app {
+  background: transparent !important;
+  overflow: hidden;
+}
 
-.widget { position: fixed; top: 0; right: 0; width: 124px; height: 96px; box-sizing: border-box; color: #fff; -webkit-app-region: drag; }
-.surface { background: rgba(0,0,0,0.64) !important; border-radius: 8px; }
-.content { height: 72px; display: flex; align-items: center; justify-content: center; }
-.disconnected { display: flex; align-items: center; gap: 6px; font-weight: 600; color: #ffb74d; }
-.device { margin-top: 6px; font-size: 12px; text-align: center; opacity: 0.9; }
+.widget {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 124px;
+  height: 96px;
+  box-sizing: border-box;
+  color: #fff;
+  -webkit-app-region: drag;
+}
+.surface {
+  background: rgba(0, 0, 0, 0.64) !important;
+  border-radius: 8px;
+}
+.content {
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.disconnected {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 600;
+  color: #ffb74d;
+}
+.device {
+  margin-top: 6px;
+  font-size: 12px;
+  text-align: center;
+  opacity: 0.9;
+}
 
 /* 横向电池条样式 */
-.horizontal-battery { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
+.horizontal-battery {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 .battery-outline {
   position: relative;
   width: 80px;
@@ -87,7 +139,7 @@ body::-webkit-scrollbar { display: none; }
   border: 2px solid #ccc;
   border-radius: 4px;
   overflow: hidden;
-  background: rgba(255,255,255,0.1);
+  background: rgba(255, 255, 255, 0.1);
 }
 .battery-level {
   height: 100%;
@@ -106,7 +158,7 @@ body::-webkit-scrollbar { display: none; }
   font-weight: bold;
   font-size: 12px;
   color: #fff;
-  text-shadow: 0 1px 2px rgba(0,0,0,0.8);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
 }
 </style>
 
@@ -115,9 +167,9 @@ export default {
   methods: {
     getColorValue(color: string): string {
       const colorMap: Record<string, string> = {
-        'success': '#4caf50',
-        'warning': '#ff9800',
-        'error': '#f44336'
+        success: '#4caf50',
+        warning: '#ff9800',
+        error: '#f44336'
       }
       return colorMap[color] || '#4caf50'
     }
