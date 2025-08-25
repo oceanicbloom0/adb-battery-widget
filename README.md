@@ -1,143 +1,143 @@
 # ADB Battery Widget
 
-一个基于 Electron + Vue 的 Android 设备电池电量监控悬浮窗应用。
+An Electron + Vue based Android device battery monitoring floating window application.
 
-## 功能特性
+## Features
 
-- **实时电池监控** - 通过 ADB 连接获取 Android 设备电池电量
-- **悬浮窗显示** - 小巧的桌面悬浮窗，实时显示电池百分比
-- **灵活连接方式** - 支持 USB 和 TCP/IP 两种 ADB 连接模式
+- **Real-time Battery Monitoring** - Get Android device battery level via ADB connection
+- **Floating Window Display** - Compact desktop floating window showing real-time battery percentage
+- **Flexible Connection Options** - Supports both USB and TCP/IP ADB connection modes
 
-## 安装
+## Installation
 
-### 环境要求
+### Requirements
 
 - Node.js >= 18
 - Android Debug Bridge (ADB)
-- Android 设备或模拟器
+- Android device or emulator
 
-### 开发环境
+### Development Setup
 
 ```bash
-# 克隆项目
+# Clone the project
 git clone <repository-url>
 cd adb-battery-widget
 
-# 安装依赖
+# Install dependencies
 npm install
 
-# 启动开发模式
+# Start development mode
 npm run dev
 ```
 
-### 构建发布
+### Build for Release
 
 ```bash
-# 构建应用
+# Build the application
 npm run build
 
-# 构建 Windows 安装包
+# Build Windows installer
 npm run build:win
 
-# 构建 macOS 应用
+# Build macOS application
 npm run build:mac
 
-# 构建 Linux 应用
+# Build Linux application
 npm run build:linux
 ```
 
-## 使用说明
+## Usage Guide
 
-### 首次使用
+### First Time Use
 
-1. **启动应用** - 运行后会在桌面右上角显示悬浮窗
-2. **连接设备** - 确保 Android 设备已启用 USB 调试
-3. **配置连接** - 右键托盘图标 → "打开设置"
+1. **Launch Application** - A floating window will appear in the top-right corner of your desktop
+2. **Connect Device** - Ensure USB debugging is enabled on your Android device
+3. **Configure Connection** - Right-click tray icon → "Open Settings"
 
-### ADB 连接配置
+### ADB Connection Configuration
 
-#### USB 模式
+#### USB Mode
 
-- 用 USB 线连接设备
-- 在设备上允许 USB 调试
-- 设置中选择 "USB" 模式
+- Connect device with USB cable
+- Allow USB debugging on the device
+- Select "USB" mode in settings
 
-#### TCP/IP 模式
+#### TCP/IP Mode
 
-1. 设备与电脑在同一网络
-2. 在设备上执行：`adb tcpip 5555`
-3. 获取设备 IP 地址
-4. 设置中选择 "TCP/IP" 模式，填入 IP 和端口
+1. Ensure device and computer are on the same network
+2. Execute on device: `adb tcpip 5555`
+3. Get device IP address
+4. Select "TCP/IP" mode in settings, enter IP and port
 
-### 托盘功能
+### Tray Functions
 
-右键托盘图标可访问：
+Right-click tray icon to access:
 
-- **打开设置** - 配置 ADB 连接和通用选项
-- **检查更新** - 手动检查应用更新
-- **退出** - 关闭应用
+- **Open Settings** - Configure ADB connection and general options
+- **Check for Updates** - Manually check for application updates
+- **Exit** - Close the application
 
-## 🛠️ 开发
+## 🛠️ Development
 
-### 项目结构
+### Project Structure
 
 ```
 src/
-├── main/           # Electron 主进程
-│   └── index.ts   # 主进程入口，ADB 连接逻辑
-├── preload/        # 预加载脚本
-│   └── index.ts   # IPC 通信桥接
-└── renderer/       # 渲染进程
+├── main/           # Electron main process
+│   └── index.ts   # Main process entry, ADB connection logic
+├── preload/        # Preload scripts
+│   └── index.ts   # IPC communication bridge
+└── renderer/       # Renderer process
     ├── src/
-    │   ├── App.vue        # 悬浮窗组件
-    │   ├── Settings.vue   # 设置页面
-    │   └── main.ts        # 渲染进程入口
-    └── index.html         # HTML 模板
+    │   ├── App.vue        # Floating window component
+    │   ├── Settings.vue   # Settings page
+    │   └── main.ts        # Renderer process entry
+    └── index.html         # HTML template
 ```
 
-### 开发命令
+### Development Commands
 
 ```bash
-# 开发模式（自动打开 DevTools）
+# Development mode (auto-opens DevTools)
 npm run dev
 
-# 类型检查
+# Type checking
 npm run typecheck
 
-# 代码格式化
+# Code formatting
 npm run format
 
-# 代码检查
+# Code linting
 npm run lint
 
-# 构建
+# Build application
 npm run build
 
-# 预览构建结果
+# Preview build results
 npm run start
 ```
 
-## ⚙️ 配置说明
+## ⚙️ Configuration
 
-### 设置项
+### Settings
 
-- **ADB 连接**
-  - 模式：USB / TCP/IP
-  - 主机：TCP 模式下的设备 IP
-  - 端口：TCP 模式下的端口（默认 5555）
+- **ADB Connection**
+  - Mode: USB / TCP/IP
+  - Host: Device IP for TCP mode
+  - Port: Port for TCP mode (default 5555)
 
-- **通用设置**
-  - 开机自启：应用是否随系统启动
-  - 自动检查更新：是否自动检查应用更新
+- **General Settings**
+  - Launch at Login: Whether to start application automatically
+  - Auto Check Updates: Whether to automatically check for updates
 
-### 配置文件
+### Configuration Files
 
-应用配置保存在：
+Application configuration is saved at:
 
 - Windows: `%APPDATA%/adb-battery-widget/settings.json`
 - macOS: `~/Library/Application Support/adb-battery-widget/settings.json`
 - Linux: `~/.config/adb-battery-widget/settings.json`
 
-## 📄 许可证
+## 📄 License
 
 MIT License
