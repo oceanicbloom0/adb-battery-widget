@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
+import { useTheme } from 'vuetify'
 
 type Settings = {
   adb: { mode: 'usb' | 'tcp' | 'wireless'; host: string; port: number; customPath: string; pairingCode: string }
@@ -13,6 +14,9 @@ const saving = ref(false)
 const pairingDialog = ref(false)
 const pairingInProgress = ref(false)
 const pairingOutput = ref('')
+
+// Theme management
+const theme = useTheme()
 
 async function load() {
   const loadedSettings = await window.api.getSettings()
@@ -80,9 +84,19 @@ async function pairDevice() {
   }
 }
 
+// Theme functions
+async function loadTheme() {
+  try {
+    const themeInfo = await window.api.getTheme()
+    theme.global.name.value = themeInfo.shouldUseDarkColors ? 'dark' : 'light'
+  } catch (error) {
+    console.error('Failed to load theme:', error)
+  }
+}
 
 onMounted(() => {
   load()
+  loadTheme()
 })
 </script>
 

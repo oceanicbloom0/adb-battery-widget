@@ -13,6 +13,8 @@ declare global {
       openSettingsWindow: () => void
       checkForUpdatesNow: () => void
       pairDevice: (host: string, port: number, pairingCode: string) => Promise<string>
+      getTheme: () => Promise<{ shouldUseDarkColors: boolean; themeSource: string }>
+      onThemeChanged: (callback: (event: any, theme: any) => void) => () => void
     }
   }
 }

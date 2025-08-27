@@ -1,4 +1,4 @@
-import { app, shell, BrowserWindow, ipcMain, Tray, Menu, nativeImage } from 'electron'
+import { app, shell, BrowserWindow, ipcMain, Tray, Menu, nativeImage, nativeTheme } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
@@ -128,6 +128,25 @@ app.whenReady().then(() => {
   // see https://github.com/alex8088/electron-toolkit/tree/master/packages/utils
   app.on('browser-window-created', (_, window) => {
     optimizer.watchWindowShortcuts(window)
+  })
+
+  // IPC for theme
+  ipcMain.handle('theme:get', () => ({
+    shouldUseDarkColors: nativeTheme.shouldUseDarkColors,
+    themeSource: nativeTheme.themeSource
+  }))
+  
+  // Listen for theme changes
+  nativeTheme.on('updated', () => {
+    const allWindows = BrowserWindow.getAllWindows()
+    allWindows.forEach(window => {
+      if (!window.isDestroyed()) {
+        window.webContents.send('theme:changed', {
+          shouldUseDarkColors: nativeTheme.shouldUseDarkColors,
+          themeSource: nativeTheme.themeSource
+        })
+      }
+    })
   })
 
   // IPC for settings

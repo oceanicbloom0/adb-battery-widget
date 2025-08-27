@@ -11,7 +11,12 @@ const api = {
   openSettingsWindow: () => ipcRenderer.send('settings:open'),
   checkForUpdatesNow: () => ipcRenderer.send('updates:check-now'),
   pairDevice: async (host: string, port: number, pairingCode: string) => 
-    ipcRenderer.invoke('adb:pair-device', host, port, pairingCode)
+    ipcRenderer.invoke('adb:pair-device', host, port, pairingCode),
+  getTheme: async () => ipcRenderer.invoke('theme:get'),
+  onThemeChanged: (callback: (event: any, theme: any) => void) => {
+    ipcRenderer.on('theme:changed', callback)
+    return () => ipcRenderer.removeListener('theme:changed', callback)
+  }
 }
 
 // Use `contextBridge` APIs to expose Electron APIs to
