@@ -42,6 +42,7 @@ function createWindow(): void {
     transparent: true,
     resizable: false,
     skipTaskbar: true, // 隐藏悬浮窗在任务栏的显示
+    title: 'ADB Battery Widget',
     ...(process.platform === 'linux' ? { icon } : {}),
     webPreferences: {
       preload: join(__dirname, '../preload/index.js'),
@@ -92,7 +93,7 @@ function openSettingsWindow(): void {
   settingsWindow = new BrowserWindow({
     width: 420,
     height: 520,
-    title: '设置',
+    title: 'ADB Battery Widget - 设置',
     resizable: false,
     autoHideMenuBar: true,
     webPreferences: {
