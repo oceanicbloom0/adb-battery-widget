@@ -67,12 +67,14 @@ function createWindow(): void {
   if (is.dev && process.env['ELECTRON_RENDERER_URL']) {
     mainWindow.loadURL(process.env['ELECTRON_RENDERER_URL'])
   } else {
-    mainWindow.loadFile(join(__dirname, '../renderer/index.html'))
+    mainWindow.loadFile(join(__dirname, '../renderer/index.html')).catch((err) => {
+      console.error('Failed to load main window:', err)
+    })
   }
 }
 
 function createTray(): void {
-  const image = nativeImage.createFromPath(join(__dirname, '../../resources/icon.png'))
+  const image = nativeImage.createFromPath(join(__dirname, is.dev ? '../../resources/icon.png' : '../resources/icon.png'))
   tray = new Tray(image)
   const contextMenu = Menu.buildFromTemplate([
     { label: '打开设置', click: () => openSettingsWindow() },
@@ -106,6 +108,8 @@ function openSettingsWindow(): void {
   } else {
     settingsWindow.loadFile(join(__dirname, '../renderer/index.html'), {
       hash: 'settings'
+    }).catch((err) => {
+      console.error('Failed to load settings window:', err)
     })
   }
   if (is.dev) {
@@ -190,7 +194,7 @@ app.whenReady().then(() => {
   ipcMain.handle('adb:pair-device', async (_e, host: string, port: number, pairingCode: string) => {
     try {
       const { exec } = require('child_process')
-      const adbPath = customAdbPath || join(__dirname, '../../adb.exe')
+      const adbPath = getAdbPath()
       
       const pairCommand = `"${adbPath}" pair ${host}:${port} ${pairingCode}`
       
@@ -251,11 +255,23 @@ app.whenReady().then(() => {
   const deviceHost = store.get('adb.host') as string
   const devicePort = (store.get('adb.port') as number) || 5555
   const customAdbPath = store.get('adb.customPath') as string
-  const pairingCode = store.get('adb.pairingCode') as string
+
+  // Get bundled ADB path
+  const getAdbPath = () => {
+    if (customAdbPath) return customAdbPath
+    
+    // In production, ADB is bundled with the app
+    if (app.isPackaged) {
+      return join(process.resourcesPath, 'app.asar.unpacked', 'adb.exe')
+    }
+    
+    // In development, use the ADB in project root
+    return join(__dirname, '../../adb.exe')
+  }
 
   // Create ADB client with custom path if specified
   const client = Adb.createClient({
-    bin: customAdbPath || join(__dirname, '../../adb.exe')
+    bin: getAdbPath()
   })
 
 

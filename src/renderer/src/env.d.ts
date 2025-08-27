@@ -26,6 +26,20 @@ declare global {
           devices: { ip: string; port: number }[]
         ) => void
       ) => void
+      pairDevice: (host: string, port: number, pairingCode: string) => Promise<string>
+      getTheme: () => Promise<{
+        shouldUseDarkColors: boolean
+        themeSource: import('electron').NativeTheme['themeSource']
+      }>
+      onThemeChanged: (
+        callback: (
+          event: import('electron').IpcRendererEvent,
+          theme: {
+            shouldUseDarkColors: boolean
+            themeSource: import('electron').NativeTheme['themeSource']
+          }
+        ) => void
+      ) => () => void
     }
   }
 }

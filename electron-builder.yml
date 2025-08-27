@@ -9,10 +9,27 @@ files:
   - '!{.eslintcache,eslint.config.mjs,.prettierignore,.prettierrc.yaml,dev-app-update.yml,CHANGELOG.md,README.md}'
   - '!{.env,.env.*,.npmrc,pnpm-lock.yaml}'
   - '!{tsconfig.json,tsconfig.node.json,tsconfig.web.json}'
+  - 'out/**/*'
+  - 'adb.exe'
+  - 'AdbWinApi.dll'
+  - 'AdbWinUsbApi.dll'
+  - 'fastboot.exe'
+  - 'libwinpthread-1.dll'
 asarUnpack:
   - resources/**
+  - adb.exe
+  - AdbWinApi.dll
+  - AdbWinUsbApi.dll
+  - fastboot.exe
+  - libwinpthread-1.dll
 win:
   executableName: adb-battery-widget
+  verifyUpdateCodeSignature: false
+  signingHashAlgorithms: null
+  signAndEditExecutable: false
+  target:
+    - target: dir
+      arch: x64
 nsis:
   artifactName: ${name}-${version}-setup.${ext}
   shortcutName: ${productName}
