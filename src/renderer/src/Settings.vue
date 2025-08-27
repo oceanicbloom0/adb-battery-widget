@@ -97,12 +97,14 @@ async function loadTheme() {
 onMounted(() => {
   load()
   loadTheme()
+  // Set data attribute to override global styles
+  document.body.setAttribute('data-settings', 'true')
 })
 </script>
 
 <template>
   <v-app>
-    <v-container class="pa-4" style="max-width: 520px">
+    <v-container fluid class="pa-4 settings-container">
       <v-card elevation="2">
         <v-card-title>设置</v-card-title>
         <v-card-text>
@@ -112,7 +114,7 @@ onMounted(() => {
             <!-- ADB 连接设置 -->
             <div class="text-subtitle-2 mb-2">ADB 连接</div>
             <v-row dense>
-              <v-col cols="12" md="6">
+              <v-col cols="12" md="3">
                 <v-select
                   label="模式"
                   :items="[
@@ -125,18 +127,18 @@ onMounted(() => {
               </v-col>
             </v-row>
             <v-row dense v-if="settings.adb.mode === 'tcp'">
-              <v-col cols="12" md="8">
+              <v-col cols="12" md="9">
                 <v-text-field label="主机" v-model="settings.adb.host" placeholder="192.168.1.10" />
               </v-col>
-              <v-col cols="12" md="4">
+              <v-col cols="12" md="3">
                 <v-text-field type="number" label="端口" v-model.number="settings.adb.port" />
               </v-col>
             </v-row>
             <v-row dense v-if="settings.adb.mode === 'wireless'">
-              <v-col cols="12" md="8">
+              <v-col cols="12" md="9">
                 <v-text-field label="主机" v-model="settings.adb.host" placeholder="192.168.1.10" />
               </v-col>
-              <v-col cols="12" md="4">
+              <v-col cols="12" md="3">
                 <v-text-field type="number" label="端口" v-model.number="settings.adb.port" />
               </v-col>
               <v-col cols="12">
@@ -177,7 +179,7 @@ onMounted(() => {
             <!-- 显示设置 -->
             <div class="text-subtitle-2 mb-2">显示设置</div>
             <v-row dense>
-              <v-col cols="12" md="6">
+              <v-col cols="12" md="3">
                 <v-select
                   label="电池样式"
                   :items="[
@@ -194,7 +196,7 @@ onMounted(() => {
             <!-- 通用设置 -->
             <div class="text-subtitle-2 mb-2">通用</div>
             <v-row>
-              <v-col cols="12" md="6">
+              <v-col cols="12" md="3">
                 <v-switch
                   inset
                   hide-details
@@ -203,7 +205,7 @@ onMounted(() => {
                   label="开机自启"
                 />
               </v-col>
-              <v-col cols="12" md="6">
+              <v-col cols="12" md="3">
                 <v-switch
                   inset
                   hide-details
@@ -273,6 +275,38 @@ onMounted(() => {
 /* Vuetify 提供大部分样式，这里仅做极简补充 */
 .loading {
   color: #666;
+}
+</style>
+
+<style>
+/* Override global centering styles for settings page */
+.settings-container {
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 16px !important;
+}
+
+.settings-container .v-card {
+  width: 100%;
+  max-width: none;
+}
+
+/* Override body centering when settings is active */
+body[data-settings="true"] {
+  display: block !important;
+  align-items: stretch !important;
+  justify-content: flex-start !important;
+  overflow: auto !important;
+  background-image: none !important;
+}
+
+body[data-settings="true"] #app {
+  display: block !important;
+  align-items: stretch !important;
+  justify-content: flex-start !important;
+  margin-bottom: 0 !important;
+  width: 100%;
+  height: 100%;
 }
 </style>
 

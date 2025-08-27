@@ -91,8 +91,8 @@ function openSettingsWindow(): void {
     return
   }
   settingsWindow = new BrowserWindow({
-    width: 420,
-    height: 520,
+    width: 800,
+    height: 500,
     title: 'ADB Battery Widget - 设置',
     resizable: false,
     autoHideMenuBar: true,
