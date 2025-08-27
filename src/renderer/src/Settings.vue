@@ -88,7 +88,7 @@ async function pairDevice() {
 async function loadTheme() {
   try {
     const themeInfo = await window.api.getTheme()
-    theme.global.name.value = themeInfo.shouldUseDarkColors ? 'dark' : 'light'
+    theme.change(themeInfo.shouldUseDarkColors ? 'dark' : 'light')
   } catch (error) {
     console.error('Failed to load theme:', error)
   }
